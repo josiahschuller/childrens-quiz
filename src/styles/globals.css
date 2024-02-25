@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: rgb(218, 218, 218);
+  color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: black;
+    color: rgb(67, 67, 67);
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--background-end-rgb)
+    )
+    var(--background-start-rgb);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
