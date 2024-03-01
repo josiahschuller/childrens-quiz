@@ -20,6 +20,7 @@ jobs:
       - name: Install Prettier
         run: npm install prettier@3.2.5
 
+      # If the prettier pipeline fails, run "npx prettier --write src" locally to fix
       - name: Run Prettier
         run: npx prettier --check src
 

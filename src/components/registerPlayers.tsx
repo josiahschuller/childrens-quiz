@@ -84,7 +84,8 @@ export default function RegisterPlayers(props: {
 
   const cardWidth: string = "400px";
 
-  function addPlayer() {
+  function addPlayer(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Prevent page from reloading
     // Get value from input and remove whitespace
     let playerToBeAdded = newPlayer.trim();
 

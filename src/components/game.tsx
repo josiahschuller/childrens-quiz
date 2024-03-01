@@ -63,8 +63,9 @@ export default function Game(props: {
     // Check if we have exhausted all topics
     if (indexIndex < topics.length) {
       // Go to the next topic
-      setIndexIndex(indexIndex + 1);
-      setIndex(indices[indexIndex]);
+      let newIndex = indexIndex + 1;
+      setIndexIndex(newIndex);
+      setIndex(indices[newIndex]);
     } else {
       // End of the game
       setGameOver(true);
