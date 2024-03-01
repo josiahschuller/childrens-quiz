@@ -35,7 +35,8 @@ export default function GameEnd(props: { playersState: Player[] }) {
               <tbody>
                 <tr className="border">
                   <th className="px-4 py-2 border">Player</th>
-                  <th className="px-4 py-2 border">Points</th></tr>
+                  <th className="px-4 py-2 border">Points</th>
+                </tr>
                 {playersState
                   .sort((a, b) => b.points - a.points)
                   .map((playerState, index) => (
