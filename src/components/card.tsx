@@ -4,7 +4,7 @@ export default function Card(props: { text: string, color: string}) {
   const text: string = props.text;
   const color: string = props.color;
 
-  const cardWidth: string = "150px";
+  const cardWidth: string = "180px";
 
   return (
     <a

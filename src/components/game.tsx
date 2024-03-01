@@ -2,13 +2,21 @@ import React from "react";
 import Card from "./card";
 import topicsData from "../data/topics.json";
 import lettersData from "../data/letters.json";
+import { Player } from "../types/player";
+import PlayerPoints from "./playerPoints";
+import Play from "@/pages/play";
 
 function shuffleArray<T>(arr: T[]): T[] {
   // Shuffle an array
   return arr.sort(() => Math.random() - 0.5);
 }
 
-export default function Game() {
+export default function Game(props: { playersState: Player[], setPlayersState: (players: Player[]) => void }) {
+  // Component for the game
+  const { playersState, setPlayersState } = props;
+
+  const [highlightedPlayer, setHighlightedPlayer] = React.useState<string>("");
+
   const topics = topicsData.topics;
   const letters = lettersData.letters;
 
@@ -30,6 +38,24 @@ export default function Game() {
   }, [maxIndex]); // Add maxIndex as a dependency to re-run the effect when it changes
 
   function next() {
+    // Award the highlighted player the point
+    if (highlightedPlayer !== "") {
+      const newPlayersState = playersState.map((player) => {
+        if (player.name === highlightedPlayer) {
+          return {
+            ...player,
+            points: player.points + 1,
+          };
+        }
+        return player;
+      });
+      setPlayersState(newPlayersState);
+      setHighlightedPlayer("");
+    } else {
+      // No player is highlighted
+      // TODO tell the user
+    }
+
     // Go to the next topic
     setIndexIndex((indexIndex + 1) % maxIndex);
     setIndex(indices[indexIndex]);
@@ -57,10 +83,18 @@ export default function Game() {
         <Card text={topics[index % topics.length]} color={topicCardColor}></Card>
         <Card text={letters[index % letters.length]} color={letterCardColor}></Card>
       </div>
+      {playersState.length > 0 ?
+        <PlayerPoints
+          playersState={playersState}
+          highlightedPlayer={highlightedPlayer}
+          setHighlightedPlayer={setHighlightedPlayer}
+        />
+        : null}
       <button
         type="button"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        className="text-white bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
         onClick={() => next()}
+        style={{ marginTop: 15 }}
       >
         Next topic
       </button>
