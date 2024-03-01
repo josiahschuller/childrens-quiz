@@ -21,7 +21,7 @@ jobs:
         run: npm install prettier@3.2.5
 
       - name: Run Prettier
-        run: prettier --check src
+        run: npx prettier --check src
 
       - name: Run Lint
         run: npm run lint
@@ -30,6 +30,7 @@ jobs:
   deploy-prod:
     # Only run this job on the main branch
     if: github.ref == 'refs/heads/main'
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
