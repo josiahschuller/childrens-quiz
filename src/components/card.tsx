@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Card(props: { text: string, color: string}) {
+export default function Card(props: { text: string; color: string }) {
   const text: string = props.text;
   const color: string = props.color;
 
