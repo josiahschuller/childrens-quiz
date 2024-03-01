@@ -4,23 +4,25 @@ import topicsData from "../data/topics.json";
 import lettersData from "../data/letters.json";
 import { Player } from "../types/player";
 import PlayerPoints from "./playerPoints";
-import Play from "@/pages/play";
+import GameEnd from "./gameEnd";
 
 function shuffleArray<T>(arr: T[]): T[] {
   // Shuffle an array
   return arr.sort(() => Math.random() - 0.5);
 }
 
-export default function Game(props: { playersState: Player[], setPlayersState: (players: Player[]) => void }) {
+export default function Game(props: {
+  playersState: Player[];
+  setPlayersState: (players: Player[]) => void;
+  setGameOver: (gameOver: boolean) => void;
+}) {
   // Component for the game
-  const { playersState, setPlayersState } = props;
+  const { playersState, setPlayersState, setGameOver } = props;
 
   const [highlightedPlayer, setHighlightedPlayer] = React.useState<string>("");
 
   const topics = topicsData.topics;
   const letters = lettersData.letters;
-
-  const maxIndex = Math.max(topics.length, letters.length);
 
   const [indices, setIndices] = React.useState<number[]>([]); // Initialize indices state
 
@@ -32,10 +34,12 @@ export default function Game(props: { playersState: Player[], setPlayersState: (
 
   React.useEffect(() => {
     // Code to run on component mount
-    const shuffledIndices = shuffleArray(Array.from(Array(maxIndex).keys())); // Shuffle the indices
+    const shuffledIndices = shuffleArray(
+      Array.from(Array(topics.length).keys()),
+    ); // Shuffle the indices
     setIndices(shuffledIndices); // Update the indices state
     setIndex(shuffledIndices[0]); // Set the initial index
-  }, [maxIndex]); // Add maxIndex as a dependency to re-run the effect when it changes
+  }, [topics.length]); // Add topics.length as a dependency to re-run the effect when it changes
 
   function next() {
     // Award the highlighted player the point
@@ -56,9 +60,15 @@ export default function Game(props: { playersState: Player[], setPlayersState: (
       // TODO tell the user
     }
 
-    // Go to the next topic
-    setIndexIndex((indexIndex + 1) % maxIndex);
-    setIndex(indices[indexIndex]);
+    // Check if we have exhausted all topics
+    if (indexIndex < topics.length) {
+      // Go to the next topic
+      setIndexIndex(indexIndex + 1);
+      setIndex(indices[indexIndex]);
+    } else {
+      // End of the game
+      setGameOver(true);
+    }
   }
 
   const topicCardColor = "rgb(50, 150, 200)";
@@ -80,20 +90,26 @@ export default function Game(props: { playersState: Player[], setPlayersState: (
           marginBottom: "1rem",
         }}
       >
-        <Card text={topics[index % topics.length]} color={topicCardColor}></Card>
-        <Card text={letters[index % letters.length]} color={letterCardColor}></Card>
+        <Card
+          text={topics[index % topics.length]}
+          color={topicCardColor}
+        ></Card>
+        <Card
+          text={letters[index % letters.length]}
+          color={letterCardColor}
+        ></Card>
       </div>
-      {playersState.length > 0 ?
+      {playersState.length > 0 ? (
         <PlayerPoints
           playersState={playersState}
           highlightedPlayer={highlightedPlayer}
           setHighlightedPlayer={setHighlightedPlayer}
         />
-        : null}
+      ) : null}
       <button
         type="button"
         className="text-white bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
-        onClick={() => next()}
+        onClick={next}
         style={{ marginTop: 15 }}
       >
         Next topic
