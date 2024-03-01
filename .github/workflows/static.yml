@@ -17,6 +17,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Install Prettier
+        run: npm install prettier@3.2.5
+
+      - name: Run Prettier
+        run: prettier --check src
+
       - name: Run Lint
         run: npm run lint
 
