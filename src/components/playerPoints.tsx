@@ -10,7 +10,10 @@ export default function PlayerPoints(props: {
 
   return (
     <div>
-      <h4 style={{ display: "flex", justifyContent: "center" }}>
+      <h4
+        className="text-2xl"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         Who won the point?
       </h4>
       <div
@@ -24,7 +27,7 @@ export default function PlayerPoints(props: {
         {playersState.map((player) => (
           <button
             key={player.name}
-            className={`button ${player.name === highlightedPlayer ? "bg-blue-900" : "bg-blue-500"} text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none`}
+            className={`button ${player.name === highlightedPlayer ? "bg-orange-800" : "bg-orange-500 hover:bg-orange-800"} text-white focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none`}
             onClick={() => setHighlightedPlayer(player.name)}
           >
             {player.name}
