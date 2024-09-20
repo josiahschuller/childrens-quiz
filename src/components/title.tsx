@@ -10,7 +10,7 @@ export default function GameTitle() {
         justifyContent: "center",
       }}
     >
-      <h1 className="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
+      <h1 className="mb-2 mt-5 text-5xl font-bold leading-tight text-primary">
         {"Children's Quiz"}
       </h1>
     </div>

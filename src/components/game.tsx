@@ -4,7 +4,6 @@ import topicsData from "../data/topics.json";
 import lettersData from "../data/letters.json";
 import { Player } from "../types/player";
 import PlayerPoints from "./playerPoints";
-import GameEnd from "./gameEnd";
 
 function shuffleArray<T>(arr: T[]): T[] {
   // Shuffle an array
@@ -61,9 +60,9 @@ export default function Game(props: {
     }
 
     // Check if we have exhausted all topics
-    if (indexIndex < topics.length) {
+    let newIndex = indexIndex + 1;
+    if (newIndex < topics.length) {
       // Go to the next topic
-      let newIndex = indexIndex + 1;
       setIndexIndex(newIndex);
       setIndex(indices[newIndex]);
     } else {
@@ -72,8 +71,9 @@ export default function Game(props: {
     }
   }
 
-  const topicCardColor = "rgb(50, 150, 200)";
-  const letterCardColor = "rgb(75, 196, 77)";
+  // const topicCardColor = "rgb(50, 150, 200)";
+  const topicCardColor = "rgb(64,132,244)";
+  const letterCardColor = "rgba(255, 247, 0, 0.82)";
   return (
     <div
       style={{
@@ -109,11 +109,13 @@ export default function Game(props: {
       ) : null}
       <button
         type="button"
-        className="text-white bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+        className="bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg px-10 py-5 me-2 focus:outline-none"
         onClick={next}
         style={{ marginTop: 15 }}
       >
-        Next topic
+        <p className="text-xl text-white font-medium text-sm">
+          {highlightedPlayer === "" ? "Skip" : "Next topic"}
+        </p>
       </button>
     </div>
   );

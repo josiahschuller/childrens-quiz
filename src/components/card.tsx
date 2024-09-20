@@ -6,10 +6,25 @@ export default function Card(props: { text: string; color: string }) {
 
   const cardWidth: string = "180px";
 
+  const isLightColor = (color: string) => {
+    // Convert the rgb string to an array of numbers
+    const rgb = color
+      .replace(/[^\d,]/g, "")
+      .split(",")
+      .map(Number);
+
+    // Calculate the brightness of the color
+    const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+
+    // Return true if the brightness is greater than 125 (considered light color)
+    return brightness > 125;
+  };
+
+  const textColor = isLightColor(color) ? "black" : "white";
+
   return (
     <a
-      href="#"
-      className="block max-w-sm p-6 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700"
+      className="block max-w-sm p-6 border border-gray-200 rounded-lg shadow"
       style={{
         margin: "1rem",
         display: "flex",
@@ -20,7 +35,9 @@ export default function Card(props: { text: string; color: string }) {
         backgroundColor: color,
       }}
     >
-      <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
+      <h5
+        className={`text-3xl font-indie-flower font-bold tracking-tight text-${textColor}`}
+      >
         {text}
       </h5>
     </a>
