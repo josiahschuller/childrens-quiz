@@ -113,7 +113,7 @@ export default function Game(props: {
         onClick={next}
         style={{ marginTop: 15 }}
       >
-        <p className="text-xl text-white font-medium text-sm">Next topic</p>
+        <p className="text-xl text-white font-medium text-sm">{highlightedPlayer === "" ? "Skip" : "Next topic"}</p>
       </button>
     </div>
   );
