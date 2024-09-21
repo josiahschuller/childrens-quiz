@@ -63,7 +63,15 @@ export default function GameEnd(props: { playersState: Player[] }) {
           </div>
         </div>
       </a>
-      <ButtonLink text="Play again" pathname="/" query={{}} />
+      <ButtonLink
+        text="Play again"
+        pathname="/"
+        query={{
+          players: encodeURIComponent(
+            JSON.stringify(playersState.map((player) => player.name)),
+          ),
+        }}
+      />
       <Confetti />
     </div>
   );
