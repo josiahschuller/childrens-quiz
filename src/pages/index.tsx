@@ -7,7 +7,7 @@ import ButtonLink from "@/components/buttonLink";
 import RangeSlider from "@/components/rangeSlider";
 import topicsData from "../data/topics.json";
 
-const DEFAULT_NUM_ROUNDS = 18;
+const DEFAULT_NUM_ROUNDS = 20;
 const MIN_NUM_ROUNDS = 5;
 
 export default function Home() {
