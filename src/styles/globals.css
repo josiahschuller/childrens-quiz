@@ -25,3 +25,15 @@ body {
     text-wrap: balance;
   }
 }
+
+input[type="range"].styled-slider::-webkit-slider-thumb {
+  /*
+  Style the thumb of the range slider
+  */
+  -webkit-appearance: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 1em;
+  background: #1d4ed8;
+  box-shadow: 0 0 2px black;
+}

@@ -12,6 +12,7 @@ export default function Play() {
   const { playersState, setPlayersState } = usePlayersState(
     router.query.players || [],
   );
+  const numRounds = Number(router.query.numRounds);
 
   return (
     <div>
@@ -21,6 +22,7 @@ export default function Play() {
           playersState={playersState}
           setPlayersState={setPlayersState}
           setGameOver={setGameOver}
+          numRounds={numRounds}
         />
       ) : (
         <GameEnd playersState={playersState} />

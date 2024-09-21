@@ -14,9 +14,10 @@ export default function Game(props: {
   playersState: Player[];
   setPlayersState: (players: Player[]) => void;
   setGameOver: (gameOver: boolean) => void;
+  numRounds: number;
 }) {
   // Component for the game
-  const { playersState, setPlayersState, setGameOver } = props;
+  const { playersState, setPlayersState, setGameOver, numRounds } = props;
 
   const [highlightedPlayer, setHighlightedPlayer] = React.useState<string>("");
 
@@ -25,8 +26,8 @@ export default function Game(props: {
 
   const [indices, setIndices] = React.useState<number[]>([]); // Initialize indices state
 
-  // Index for selecting the randomised index
-  const [indexIndex, setIndexIndex] = React.useState(0);
+  // Round number the game is up to
+  const [roundNum, setRoundNum] = React.useState(0);
 
   // Randomised index for selecting the topic and letter
   const [index, setIndex] = React.useState<number>(0); // Initialize index state
@@ -60,11 +61,11 @@ export default function Game(props: {
     }
 
     // Check if we have exhausted all topics
-    let newIndex = indexIndex + 1;
-    if (newIndex < topics.length) {
+    let newRoundNum = roundNum + 1;
+    if (newRoundNum < numRounds) {
       // Go to the next topic
-      setIndexIndex(newIndex);
-      setIndex(indices[newIndex]);
+      setRoundNum(newRoundNum);
+      setIndex(indices[newRoundNum]);
     } else {
       // End of the game
       setGameOver(true);
@@ -84,6 +85,9 @@ export default function Game(props: {
         height: "50vh",
       }}
     >
+      <p className="mb-3 text-lg text-gray-800 md:text-xl dark:text-gray-300">
+        {`Round ${roundNum + 1} of ${numRounds}`}
+      </p>
       <div
         style={{
           display: "flex",
