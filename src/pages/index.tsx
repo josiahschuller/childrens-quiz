@@ -4,11 +4,19 @@ import { useRouter } from "next/router";
 import RegisterPlayers from "@/components/registerPlayers";
 import Title from "@/components/title";
 import ButtonLink from "@/components/buttonLink";
+import RangeSlider from "@/components/rangeSlider";
+import topicsData from "../data/topics.json";
+
+const DEFAULT_NUM_ROUNDS = 20;
+const MIN_NUM_ROUNDS = 5;
 
 export default function Home() {
   // Get players from query parameters
   const router = useRouter();
   const { players, setPlayers } = usePlayersNames(router.query.players || []);
+  const [numRounds, setNumRounds] = React.useState<number>(DEFAULT_NUM_ROUNDS);
+
+  const MAX_NUM_ROUNDS = topicsData.topics.length;
 
   return (
     <div
@@ -24,10 +32,20 @@ export default function Home() {
         players={players}
         setPlayers={setPlayers}
       ></RegisterPlayers>
+      <RangeSlider
+        min={MIN_NUM_ROUNDS}
+        max={MAX_NUM_ROUNDS}
+        value={numRounds}
+        label={`Number of rounds: ${numRounds}`}
+        setValue={setNumRounds}
+      />
       <ButtonLink
         text="Play game"
         pathname="/play"
-        query={{ players: encodeURIComponent(JSON.stringify(players)) }}
+        query={{
+          players: encodeURIComponent(JSON.stringify(players)),
+          numRounds: numRounds,
+        }}
       />
     </div>
   );
