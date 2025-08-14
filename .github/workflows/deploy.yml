@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - clean-up-actions-workflows
 
   workflow_dispatch:
 
