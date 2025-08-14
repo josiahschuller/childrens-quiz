@@ -1,0 +1,28 @@
+name: Lint/formatting checks
+
+on:
+  push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Prettier
+        run: npm install prettier@3.2.5
+
+      # If the prettier pipeline fails, run "npx prettier --write src" locally to fix
+      - name: Run Prettier
+        run: npx prettier --check src
+
+      - name: Run Lint
+        run: npm run lint
